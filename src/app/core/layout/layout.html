@@ -1,3 +1,39 @@
-<div>
+<mat-toolbar color="primary" class="main-toolbar">
+  <!-- File Menu -->
+  <button mat-button [matMenuTriggerFor]="fileMenu">File</button>
+  <mat-menu #fileMenu="matMenu">
+    <button mat-menu-item (click)="navigateTo('login')">
+      <mat-icon>login</mat-icon>
+      <span>Login</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+    <button mat-menu-item (click)="closeApp()">
+      <mat-icon>close</mat-icon>
+      <span>Close</span>
+    </button>
+  </mat-menu>
+
+  <!-- Library Menu -->
+  <button mat-button [matMenuTriggerFor]="libraryMenu">Library</button>
+  <mat-menu #libraryMenu="matMenu">
+    <button mat-menu-item (click)="navigateTo('customers')">
+      <mat-icon>group</mat-icon>
+      <span>Manage Customers</span>
+    </button>
+    <button mat-menu-item (click)="navigateTo('circulation')">
+      <mat-icon>sync_alt</mat-icon>
+      <span>Circulation</span>
+    </button>
+    <button mat-menu-item (click)="navigateTo('reports')">
+      <mat-icon>bar_chart</mat-icon>
+      <span>Reports</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<div class="layout-content">
   <router-outlet></router-outlet>
 </div>
