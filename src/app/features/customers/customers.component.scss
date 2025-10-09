@@ -1,3 +1,33 @@
-h2 {
-  color: var(--mat-sys-primary);
+.customers-card {
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.customers-table {
+  width: 100%;
+
+  th.mat-header-cell {
+    font-weight: 600;
+  }
+
+  td.mat-cell {
+    vertical-align: middle;
+  }
+}
+
+.empty {
+  margin-top: 12px;
+  color: rgba(0, 0, 0, 0.6);
 }
