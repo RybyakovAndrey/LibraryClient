@@ -3,24 +3,34 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
   gap: 10px;
+  width: 100%;
+  height: 100%;
 }
 .search-form {
   width: 30%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  padding: 5em;
 }
 
 .itema {
   grid-column: 1;
   grid-row: span 2;
+  border: 1px solid black;
+  margin: 10px;
 }
 
 .itemb {
   grid-column: 2;
   grid-row: 1;
+  border: 1px solid black;
+  margin: 10px;
 }
 
 .itemc {
   grid-column: 2;
   grid-row: 2;
+  border: 1px solid black;
+  margin: 10px;
 }
