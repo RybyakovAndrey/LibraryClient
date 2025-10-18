@@ -2,7 +2,7 @@
   <!-- File Menu -->
   <button mat-button [matMenuTriggerFor]="fileMenu">File</button>
   <mat-menu #fileMenu="matMenu">
-    <button mat-menu-item (click)="navigateTo('login')">
+    <button mat-menu-item (click)="openLoginDialog()">
       <mat-icon>login</mat-icon>
       <span>Login</span>
     </button>

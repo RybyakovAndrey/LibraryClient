@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { Customer } from './customer.model';
+import { Customer } from '../models/customer.model';
 
 const STORAGE_KEY = 'app_customers_v1';
 
