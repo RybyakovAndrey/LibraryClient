@@ -1,1 +1,11 @@
-<p>book-description works!</p>
+<h1>{{book.title}}</h1>
+<a (click)="bookDescription()">by {{book.author.name}}</a>
+<p>first published {{book.publishYear}}</p>
+<h2>Description</h2>
+<p>{{book.description}}</p>
+<h2>Subjects</h2>
+<p>
+  @for (subject of book.subjects; track $index) {
+    {{subject}}
+  }
+</p>
