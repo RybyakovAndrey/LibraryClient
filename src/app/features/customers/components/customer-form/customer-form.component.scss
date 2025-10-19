@@ -1,0 +1,25 @@
+.form-card {
+  padding: 16px;
+  max-width: 720px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  .full {
+    grid-column: 1 / -1;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+}
+
+.page-title {
+  margin: 0 0 8px 0;
+}
