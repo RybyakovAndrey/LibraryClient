@@ -1,26 +1,59 @@
 :host {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 10px;
-}
-.search-form {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
+  display: block;
 }
 
-.itema {
-  grid-column: 1;
-  grid-row: span 2;
+.main-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "itema itemb"
+    "itema itemc";
+  grid-template-rows: auto 1fr;
+  min-height: calc(100vh - 64px);
+  background-color: #f9f9fb;
+  padding: 20px;
+  gap: 20px;
+}
+
+.search-form {
+  grid-area: itema;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-form mat-form-field {
+  width: 80%;
+  max-width: 440px;
+}
+
+.search-button {
+  width: 220px;
+  max-width: 60%;
+  margin-top: 12px;
+  font-weight: 600;
+  border-radius: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .itemb {
-  grid-column: 2;
-  grid-row: 1;
+  grid-area: itemb;
+  align-self: start;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .itemc {
-  grid-column: 2;
-  grid-row: 2;
+  grid-area: itemc;
+  align-self: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.itemb ::ng-deep table {
+  width: 100%;
 }
