@@ -88,8 +88,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ]
+  "src/theme.scss",
+  "src/styles.scss"
+]
           }
         }
       }

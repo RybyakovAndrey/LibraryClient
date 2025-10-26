@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+
+// Основной зелёный
+$bookmaster-green: mat.m2-define-palette(mat.$m2-green-palette, 700, 500, 900);
+
+// Мягкий зелёный
+$bookmaster-accent: mat.m2-define-palette(mat.$m2-green-palette, 400, 300, 600);
+
+// Цвет предупреждений
+$bookmaster-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+// === Тема ===
+$bookmaster-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $bookmaster-green,
+    accent: $bookmaster-accent,
+    warn: $bookmaster-warn,
+  ),
+  typography: mat.m2-define-typography-config(),
+  density: 0
+));
+
+@include mat.all-component-themes($bookmaster-theme);
