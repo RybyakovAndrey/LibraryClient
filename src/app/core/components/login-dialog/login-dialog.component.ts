@@ -21,15 +21,16 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   template: `
     <h2 mat-dialog-title>Login</h2>
+
     <form [formGroup]="form" (ngSubmit)="login()" class="dialog-form">
       <mat-form-field appearance="outline" class="full">
         <mat-label>Username</mat-label>
-        <input matInput formControlName="username" />
+        <input matInput formControlName="username" autocomplete="off" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full">
         <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password" />
+        <input matInput type="password" formControlName="password" autocomplete="off" />
       </mat-form-field>
 
       <div class="dialog-actions">
@@ -39,8 +40,42 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     </form>
   `,
   styles: [`
-    .dialog-form { display: flex; flex-direction: column; gap: 12px; }
-    .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+    :host {
+      display: block;
+      overflow: hidden;
+    }
+
+    h2 {
+      margin: 0;
+      text-align: center;
+      font-weight: 500;
+      color: #1a237e;
+    }
+
+    .dialog-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 12px 8px;
+      max-height: 100%;
+      overflow: hidden;
+    }
+
+    .full {
+      width: 100%;
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    button[mat-flat-button] {
+      border-radius: 24px;
+      padding: 6px 24px;
+    }
   `]
 })
 export class LoginDialogComponent implements OnInit {
