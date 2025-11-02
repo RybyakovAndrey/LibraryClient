@@ -29,6 +29,7 @@ export class BookDescription {
   bookDescription() {
     this.dialog.open(AuthorsDescription, {
       width: '500px',
+      data:  {value: this.book.author},
     })
   }
 }

@@ -1,8 +1,17 @@
 <h2 mat-dialog-title class="dialog-title">Author Information</h2>
-<div mat-dialog-content class="dialog-content">
-  <p><strong>Byron Barton</strong></p>
-  <p>British author and illustrator known for his playful and educational style in children's literature.</p>
-</div>
+<mat-form-field>
+  <mat-label>Authors</mat-label>
+  <mat-select [(ngModel)]="selectedAuthor">
+    @for (author of authors(); track author.id) {
+      <mat-option [value]="author.name">{{author.name}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+<p>{{selectedAuthor.name}}</p>
+<p>{{selectedAuthor.bio}}</p>
+<p>{{selectedAuthor.birthDate}}</p>
+<p>{{selectedAuthor.deathDate}}</p>
+<p>{{selectedAuthor.wikipedia}}</p>
 <div mat-dialog-actions align="end">
   <button mat-button color="primary" (click)="closeDialog()">Close</button>
 </div>
