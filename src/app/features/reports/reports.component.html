@@ -1,2 +1,102 @@
-<h2 class="page-title">Reports Page</h2>
-<p>Here will be reporting functionality.</p>
+<mat-card class="reports-card">
+  <div class="header-row">
+    <h2 class="page-title">Reports</h2>
+
+    <!-- Кнопка Export-->
+    <button mat-flat-button color="primary" (click)="exportCSV(activeTab)">
+      <mat-icon>description</mat-icon>
+      Export
+    </button>
+  </div>
+
+  <!-- Вкладки -->
+  <div class="tabs-row">
+    <mat-tab-group
+      class="custom-tabs"
+      [(selectedIndex)]="tabIndex"
+      (selectedIndexChange)="activeTab = $event === 0 ? 'reminders' : 'history'"
+    >
+      <mat-tab label="Reminders"></mat-tab>
+      <mat-tab label="Book History"></mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <!-- Reminders -->
+  <div *ngIf="activeTab === 'reminders'">
+    <table mat-table [dataSource]="reminders" class="mat-elevation-z1 full-table">
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let r">{{ r.title }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef>Customer</th>
+        <td mat-cell *matCellDef="let r">{{ r.customer }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="issueDate">
+        <th mat-header-cell *matHeaderCellDef>Date of issue</th>
+        <td mat-cell *matCellDef="let r">{{ formatDate(r.issueDate) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="returnUntil">
+        <th mat-header-cell *matHeaderCellDef>Return until</th>
+        <td mat-cell *matCellDef="let r">{{ formatDate(r.returnUntil) }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['title','customer','issueDate','returnUntil']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['title','customer','issueDate','returnUntil']"></tr>
+    </table>
+  </div>
+
+  <!-- Book History -->
+  <div *ngIf="activeTab === 'history'" class="book-history-grid">
+    <!-- Левая колонка -->
+    <div class="left-panel">
+      <mat-form-field appearance="outline" class="book-id-field">
+        <mat-label>Book ID</mat-label>
+        <input matInput [formControl]="bookSearch" (keyup.enter)="searchBook()" />
+      </mat-form-field>
+
+      <div *ngIf="selectedBookTitle" class="book-info">
+        <h3 class="book-title">{{ selectedBookTitle }}</h3>
+        <p *ngIf="selectedBookSubtitle" class="book-subtitle">{{ selectedBookSubtitle }}</p>
+      </div>
+    </div>
+
+    <!-- Правая колонка -->
+    <div class="right-panel">
+      <table
+        mat-table
+        [dataSource]="history"
+        class="mat-elevation-z1"
+        *ngIf="history.length > 0"
+      >
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef>Customer</th>
+          <td mat-cell *matCellDef="let h">{{ h.customer }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="issueDate">
+          <th mat-header-cell *matHeaderCellDef>Date of issue</th>
+          <td mat-cell *matCellDef="let h">{{ formatDate(h.issueDate) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="returnDate">
+          <th mat-header-cell *matHeaderCellDef>Return date</th>
+          <td mat-cell *matCellDef="let h">
+            {{ formatDate(h.returnDate) }}
+            <mat-icon *ngIf="h.overdue" color="warn">warning</mat-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['customer','issueDate','returnDate']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['customer','issueDate','returnDate']"></tr>
+      </table>
+
+      <div *ngIf="!history.length && selectedBookTitle === null" class="empty">
+        No data available.
+      </div>
+    </div>
+  </div>
+</mat-card>
