@@ -1,0 +1,26 @@
+
+<div>
+  <div class="search-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Customer ID</mat-label>
+      <input matInput />
+    </mat-form-field>
+
+    <button mat-button="elevated" class="search-button">Search</button>
+  </div>
+  <div>
+    <h1>Issue / Return</h1>
+    <mat-form-field appearance="outline">
+      <mat-label>Book ID</mat-label>
+      <input matInput />
+    </mat-form-field>
+    <button mat-button="elevated" class="search-button">Issue</button>
+    <button mat-button="elevated" class="search-button">Return</button>
+    <h2>Current issues</h2>
+    <app-circulation-list-page [data]="dataSource"></app-circulation-list-page>
+    <h2>History</h2>
+    <app-circulation-list-page [data]="dataSource"></app-circulation-list-page>
+  </div>
+</div>
+
+
