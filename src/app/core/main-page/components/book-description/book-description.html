@@ -1,11 +1,20 @@
-<h1>{{book.title}}</h1>
-<a (click)="bookDescription()">by {{book.author.name}}</a>
-<p>first published {{book.publishYear}}</p>
-<h2>Description</h2>
-<p>{{book.description}}</p>
-<h2>Subjects</h2>
-<p>
-  @for (subject of book.subjects; track $index) {
-    {{subject}}
-  }
-</p>
+<div *ngIf="book; else noSelection">
+  <h1>{{ book.title }}</h1>
+  <a (click)="$event.preventDefault()">{{ book.authors }}</a>
+  <p *ngIf="book.publishYear">first published {{ book.publishYear }}</p>
+
+  <h2>Description</h2>
+  <p>{{ book.description }}</p>
+
+  <h2>Subjects</h2>
+  <p *ngIf="book?.subjects as subs">
+    <span *ngFor="let s of subs; index as i">
+      {{ s }}<span *ngIf="i < subs.length - 1">, </span>
+    </span>
+  </p>
+</div>
+
+<ng-template #noSelection>
+  <p>Select a book to see details.</p>
+</ng-template>
+

@@ -1,24 +1,21 @@
-<div class="main-page">
-  <div class="search-form itema">
-    <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
-      <input matInput />
-    </mat-form-field>
+<div class="search-form itema" [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" />
+  </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Author</mat-label>
-      <input matInput />
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Author</mat-label>
+    <input matInput formControlName="author" />
+  </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Subject</mat-label>
-      <input matInput />
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Subject</mat-label>
+    <input matInput formControlName="subject" />
+  </mat-form-field>
 
-    <button mat-button="elevated" class="search-button">Search</button>
-  </div>
-
-  <app-books-list-page class="itemb"></app-books-list-page>
-  <app-book-description class="itemc"></app-book-description>
+  <button mat-flat-button color="primary" (click)="search()">Search</button>
 </div>
 
+<app-books-list-page class="itemb" [books]="books" (select)="onSelect($event)"></app-books-list-page>
+<app-book-description class="itemc" [book]="selected"></app-book-description>

@@ -1,31 +1,25 @@
-import { Component } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
-
-export interface Book {
-  title: string;
-  authors: string;
-}
-
-const ELEMENT_DATA: Book[] = [
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-];
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Book } from '../../../services/books.service';
 
 @Component({
   selector: 'app-books-list-page',
-  imports: [
-    MatTableModule
-  ],
+  standalone: true,
+  imports: [CommonModule, MatTableModule, MatCardModule, MatIconModule, MatTooltipModule],
   templateUrl: './books-list-page.html',
-  styleUrl: './books-list-page.scss'
+  styleUrls: ['./books-list-page.scss']
 })
 export class BooksListPage {
+  @Input() books: Book[] = [];
+  @Output() select = new EventEmitter<Book>();
+
   displayedColumns: string[] = ['title', 'authors'];
-  dataSource = ELEMENT_DATA;
+
+  onRowClick(row: Book) {
+    this.select.emit(row);
+  }
 }
