@@ -5,7 +5,7 @@ import {AuthorsDescription} from '../authors-description/authors-description';
 export interface BookDescription {
   title: string;
   publishYear: number;
-  author: Authors;
+  author: Authors[];
   description: string;
   subjects: string[];
 }
@@ -21,7 +21,7 @@ export class BookDescription {
   book: BookDescription = {
     title: 'Boaty McBoatface',
     publishYear: 2016,
-    author: { id: 12, name: 'Byron Barton'},
+    author: [ { id: 12, name: 'Byron Barton'}, { id: 13, name: 'Mark Twen' } ],
     description: 'boaty good job',
     subjects: ['British', 'Polar bear'],
   } as BookDescription;
