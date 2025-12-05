@@ -1,39 +1,58 @@
-<mat-card class="form-card">
-  <h2 class="page-title">{{ editMode ? 'Edit Customer' : 'Add Customer' }}</h2>
-
-  <form [formGroup]="form" (ngSubmit)="save()" class="form-grid">
-    <mat-form-field appearance="outline">
-      <mat-label>Name *</mat-label>
-      <input matInput formControlName="name" />
-      <mat-error *ngIf="form.controls['name'].hasError('required')">Name is required</mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Phone</mat-label>
-      <input matInput formControlName="phone" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Address</mat-label>
-      <input matInput formControlName="address" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Notes</mat-label>
-      <textarea matInput formControlName="notes" rows="4"></textarea>
-    </mat-form-field>
-
-    <div class="buttons full">
-      <button mat-flat-button color="primary" type="submit">
-        <mat-icon>save</mat-icon>
-        {{ editMode ? 'Save' : 'Add' }}
-      </button>
-      <button mat-button type="button" (click)="cancel()">Cancel</button>
+<div class="window-container">
+  <div class="window-header">
+    <span class="window-title">Add / Edit Customer</span>
+    <div class="window-controls">
+      <span class="control-box close-btn" (click)="closeWindow()">×</span>
     </div>
-  </form>
-</mat-card>
+  </div>
+
+  <div class="window-body">
+    <form [formGroup]="form" (ngSubmit)="save()" class="custom-form">
+      
+      <div class="form-row">
+        <div class="field-group col-left">
+          <label>ID</label>
+          <input type="text" formControlName="customerId" class="custom-input disabled-input">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-group col-left">
+          <label>Name</label>
+          <input type="text" formControlName="name" class="custom-input">
+        </div>
+        <div class="field-group col-right">
+          <label>Phone</label>
+          <input type="text" formControlName="phone" class="custom-input">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-group col-left">
+          <label>Address</label>
+          <input type="text" formControlName="address" class="custom-input">
+        </div>
+        <div class="field-group col-right">
+          <label>Email</label>
+          <input type="text" formControlName="email" class="custom-input">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-group col-left zip-city-row">
+          <label>Zip / City</label>
+          <div class="zip-city-inputs">
+            <input type="text" formControlName="zip" class="custom-input zip-input">
+            <input type="text" formControlName="city" class="custom-input city-input">
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons-row">
+        <button type="submit" class="cmd-button">Save</button>
+        <button type="button" class="cmd-button" (click)="cancel()">Cancel</button>
+      </div>
+
+    </form>
+  </div>
+</div>

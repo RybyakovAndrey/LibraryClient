@@ -1,25 +1,137 @@
-.form-card {
-  padding: 16px;
-  max-width: 720px;
+$black: #000000;
+$white: #FFFFFF;
+$font-stack: Tahoma, sans-serif;
+
+:host {
+  display: block;
+  font-family: $font-stack;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
 }
 
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.window-container {
+  width: 600px;
+  border: 2px solid $black;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+}
 
-  .full {
-    grid-column: 1 / -1;
+.window-header {
+  border-bottom: 2px solid $black;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .window-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #000;
   }
 
-  .buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    margin-top: 8px;
+  .window-controls {
+    .control-box {
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      user-select: none;
+      
+      &:hover {
+        color: red;
+      }
+    }
   }
 }
 
-.page-title {
-  margin: 0 0 8px 0;
+.window-body {
+  padding: 20px 30px;
+}
+
+.custom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 30px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.col-left {
+  flex: 1;
+}
+
+.col-right {
+  flex: 1;
+}
+
+label {
+  font-size: 14px;
+  color: #000;
+}
+
+.custom-input {
+  border: 2px solid $black;
+  height: 30px;
+  padding: 0 5px;
+  font-family: $font-stack;
+  font-size: 14px;
+  box-sizing: border-box;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+    background-color: #e6f7ff;
+  }
+}
+
+.disabled-input {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.zip-city-inputs {
+  display: flex;
+  gap: 10px;
+  
+  .zip-input {
+    width: 80px;
+  }
+  
+  .city-input {
+    flex: 1;
+  }
+}
+
+.buttons-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.cmd-button {
+  min-width: 80px;
+  height: 30px;
+  background-color: $white;
+  border: 2px solid $black;
+  font-family: $font-stack;
+  font-size: 14px;
+  font-weight: normal;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+
+  &:active {
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.3);
+    transform: translate(2px, 2px);
+  }
 }
