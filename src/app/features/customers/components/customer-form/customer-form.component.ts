@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Customer } from '../../models/customer.model';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-customer-form',
@@ -16,11 +11,6 @@ import { Customer } from '../../models/customer.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
     MatSnackBarModule
   ],
   templateUrl: './customer-form.component.html',
@@ -29,45 +19,48 @@ import { Customer } from '../../models/customer.model';
 export class CustomerFormComponent implements OnInit {
   form!: FormGroup;
   editMode = false;
-  currentCustomer: Customer | null = null;
+  currentId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private customerService: CustomerService
   ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
+      customerId: [{ value: '', disabled: true }],
       name: ['', Validators.required],
       email: [''],
       phone: [''],
       address: [''],
-      notes: ['']
+      zip: [''],
+      city: [''],
+      // Notes нет в макете на стр 13, но было в старой форме. 
+      // Если следовать строго макету стр 13, Notes там нет. 
+      // Но в БД оно есть. Оставим поле в модели, но в HTML отобразим только то, что на картинке.
+      notes: [''] 
     });
 
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.editMode = true;
-      const id = Number(idParam);
-      this.loadCustomer(id);
+      this.currentId = Number(idParam);
+      this.loadCustomer(this.currentId);
     }
   }
 
   private loadCustomer(id: number) {
-    const fakeData: Customer[] = [
-      { id: 1, name: 'John Smith', email: 'john@example.com', phone: '+1-555-123', address: 'NY', notes: 'VIP' },
-      { id: 2, name: 'Anna White', email: 'anna@example.com', phone: '+1-555-789', address: 'LA', notes: '' }
-    ];
-    this.currentCustomer = fakeData.find(customer => customer.id === id) || null;
-
-    if (this.currentCustomer) {
-      this.form.patchValue(this.currentCustomer);
-    } else {
-      this.snack.open('Customer not found', 'OK', { duration: 2500 });
-      this.router.navigate(['/customers']);
-    }
+    this.customerService.getById(id).subscribe(customer => {
+      if (customer) {
+        this.form.patchValue(customer);
+      } else {
+        this.snack.open('Customer not found', 'OK', { duration: 2500 });
+        this.router.navigate(['/customers']);
+      }
+    });
   }
 
   save() {
@@ -76,16 +69,26 @@ export class CustomerFormComponent implements OnInit {
       return;
     }
 
-    const data = this.form.value as Customer;
-    this.snack.open(
-      this.editMode ? 'Customer updated successfully' : 'Customer added successfully',
-      'OK',
-      { duration: 2500 }
-    );
-    this.router.navigate(['/customers']);
+    const formValue = this.form.getRawValue();
+
+    if (this.editMode && this.currentId) {
+      this.customerService.update(this.currentId, formValue).subscribe(() => {
+        this.snack.open('Data saved', 'OK', { duration: 1500 });
+        this.router.navigate(['/customers']);
+      });
+    } else {
+      this.customerService.create(formValue).subscribe(() => {
+        this.snack.open('Customer added', 'OK', { duration: 1500 });
+        this.router.navigate(['/customers']);
+      });
+    }
   }
 
   cancel() {
+    this.router.navigate(['/customers']);
+  }
+
+  closeWindow() {
     this.router.navigate(['/customers']);
   }
 }

@@ -1,46 +1,82 @@
-<mat-card class="customers-card">
-  <div class="header">
-    <h2 class="page-title">Customers</h2>
-    <div class="actions">
-      <button mat-flat-button color="primary" (click)="add()">
-        <mat-icon>person_add</mat-icon> Add Customer
-      </button>
+<div class="window-container">
+  <!-- Заголовок окна -->
+  <div class="window-header">
+    <span class="window-title">Customers</span>
+    <div class="window-controls">
+      <span class="control-box">_</span>
+      <span class="control-box">□</span>
+      <span class="control-box close-btn" (click)="closeWindow()">×</span>
     </div>
   </div>
 
-  <table mat-table [dataSource]="customers" class="mat-elevation-z2 customers-table">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let c"> {{ c.name }} </td>
-    </ng-container>
+  <!-- Основной контент в рамке -->
+  <div class="content-box">
+    
+    <!-- Левая панель: Поиск и кнопки -->
+    <div class="left-panel">
+      <!-- Форма поиска -->
+      <form [formGroup]="searchForm" (ngSubmit)="search()" class="search-group">
+        <div class="input-row">
+          <label>Customer ID</label>
+          <input type="text" formControlName="customerId" class="custom-input thick-border">
+        </div>
 
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let c"> {{ c.email || '-' }} </td>
-    </ng-container>
+        <div class="input-row">
+          <label>Name</label>
+          <input type="text" formControlName="name" class="custom-input thick-border">
+        </div>
 
-    <ng-container matColumnDef="phone">
-      <th mat-header-cell *matHeaderCellDef> Phone </th>
-      <td mat-cell *matCellDef="let c"> {{ c.phone || '-' }} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let c">
-        <button mat-icon-button color="primary" (click)="edit(c.id)" matTooltip="Edit">
-          <mat-icon>edit</mat-icon>
+        <button type="submit" mat-button class="search-btn">
+          <mat-icon>search</mat-icon> Search
         </button>
-        <button mat-icon-button color="warn" (click)="remove(c.id)" matTooltip="Delete">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      </form>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <!-- Нижние кнопки -->
+      <div class="action-buttons">
+        <button mat-button class="action-btn" (click)="edit()">Edit...</button>
+        <button mat-button class="action-btn" (click)="add()">Add...</button>
+      </div>
+    </div>
 
-  <div *ngIf="customers.length === 0" class="empty">
-    No customers yet. Click "Add Customer" to create one.
+    <!-- Правая панель: Таблица -->
+    <div class="right-panel">
+      <div class="table-container">
+        <table mat-table [dataSource]="filteredCustomers" class="custom-table">
+          
+          <ng-container matColumnDef="customerId">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let c"> {{ c.customerId }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let c"> {{ c.name }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef> Address </th>
+            <td mat-cell *matCellDef="let c"> {{ c.address }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="zip">
+            <th mat-header-cell *matHeaderCellDef> Zip </th>
+            <td mat-cell *matCellDef="let c"> {{ c.zip }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef> City </th>
+            <td mat-cell *matCellDef="let c"> {{ c.city }} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr 
+            mat-row 
+            *matRowDef="let row; columns: displayedColumns"
+            [class.selected-row]="selectedCustomer === row"
+            (click)="selectCustomer(row)"
+          ></tr>
+        </table>
+      </div>
+    </div>
   </div>
-</mat-card>
+</div>

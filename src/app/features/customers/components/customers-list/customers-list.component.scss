@@ -1,33 +1,233 @@
-.customers-card {
-  padding: 16px;
+/* Цвета и шрифты */
+$light-green: #8FA43B;
+$black: #000000;
+$white: #FFFFFF;
+$grey: #f0f0f0;
+$selection-blue: #3399FF;
+$font-stack: Tahoma, sans-serif;
+
+:host {
+  display: block;
+  font-family: $font-stack;
+  padding: 20px;
 }
 
-.header {
+.window-container {
+  max-width: 900px;
+  height: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.window-header {
+  background-color: $white;
+  border: 2px solid $black; 
+  border-bottom: none; 
+  padding: 4px 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  flex-shrink: 0;
 
-  .actions {
+  .window-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #000;
+  }
+
+  .window-controls {
     display: flex;
-    gap: 8px;
+    gap: 2px;
+    
+    .control-box {
+      border: 1px solid #999;
+      background: #eee;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      cursor: default;
+      font-weight: bold;
+      user-select: none;
+
+      &.close-btn {
+        cursor: pointer;
+        &:hover {
+          background-color: #e81123;
+          color: white;
+        }
+      }
+    }
   }
 }
 
-.customers-table {
+/* Основной блок с рамкой */
+.content-box {
+  display: flex;
+  flex: 1;
+  border: 2px solid $black; /* Это и есть "нижняя горизонтальная линия" (bottom border) */
+  background-color: $white;
+  overflow: hidden;
+}
+
+/* Left Panel */
+.left-panel {
+  width: 250px;
+  padding: 15px;
+  /* Важно: отступ снизу, чтобы кнопки "висели" над нижней линией */
+  padding-bottom: 30px; 
+  border-right: 2px solid $black; /* Вертикальная линия разделитель панелей */
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+}
+
+.search-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  
+  label {
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+.custom-input {
+  border: 2px solid $black;
+  padding: 4px;
+  font-family: $font-stack;
+  font-size: 12px;
+  height: 24px;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    background-color: #e6f7ff;
+  }
+}
+
+.search-btn {
+  border: 2px solid $black;
+  background-color: $white;
+  color: $black;
+  border-radius: 4px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  margin-top: 5px;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+  }
+}
+
+.action-buttons {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  
+  .action-btn {
+    border: 1px solid $black;
+    background-color: $white;
+    color: $black;
+    min-width: 80px;
+    height: 30px;
+    border-radius: 0;
+    font-weight: 500;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+    
+    &:active {
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+      transform: translate(1px, 1px);
+    }
+  }
+}
+
+/* Right Panel */
+.right-panel {
+  flex: 1;
+  background-color: $white;
+  overflow: auto;
+  position: relative;
+}
+
+.table-container {
+  height: 100%;
+  overflow: auto;
+}
+
+.custom-table {
   width: 100%;
+  border-collapse: collapse; /* Обеспечивает слитность линий */
 
   th.mat-header-cell {
-    font-weight: 600;
+    background-color: #ddd;
+    color: $black;
+    font-weight: bold;
+    /* Вертикальная линия справа в заголовке */
+    border-right: 2px solid $black; 
+    border-bottom: 2px solid $black;
+    padding: 0 8px;
+    height: 24px;
+    font-size: 11px;
+    
+    &:last-child {
+      border-right: none;
+    }
   }
 
   td.mat-cell {
-    vertical-align: middle;
-  }
-}
+    padding: 0 8px;
+    /* Вертикальная линия справа в строках - ОБЯЗАТЕЛЬНО */
+    border-right: 2px solid $black !important;
+    border-bottom: 1px solid #ccc;
+    font-size: 11px;
+    height: 24px;
+    cursor: default;
+    color: $black;
 
-.empty {
-  margin-top: 12px;
-  color: rgba(0, 0, 0, 0.6);
+    &:last-child {
+      border-right: none !important;
+    }
+  }
+
+  tr.mat-mdc-row {
+    height: 24px;
+    
+    &:nth-child(even) {
+      background-color: #f5f5f5;
+    }
+
+    &:hover {
+      background-color: #e6f7ff;
+    }
+
+    &.selected-row {
+      background-color: $selection-blue !important;
+      
+      td.mat-cell {
+        color: $white;
+        /* Убедимся, что границы видны даже при выделении */
+        border-right-color: $black !important;
+      }
+    }
+  }
 }
