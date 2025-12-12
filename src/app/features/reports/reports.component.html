@@ -1,102 +1,130 @@
-<mat-card class="reports-card">
-  <div class="header-row">
-    <h2 class="page-title">Reports</h2>
-
-    <!-- Кнопка Export-->
-    <button mat-flat-button color="primary" (click)="exportCSV(activeTab)">
-      <mat-icon>description</mat-icon>
-      Export
-    </button>
+<div class="window-container">
+  <!-- Заголовок окна -->
+  <div class="window-header">
+    <span class="window-title">Bookmaster3000™ - Reports</span>
+    <div class="window-controls">
+      <span class="control-box">_</span>
+      <span class="control-box">□</span>
+      <span class="control-box close-btn" (click)="closeWindow()">×</span>
+    </div>
   </div>
 
-  <!-- Вкладки -->
-  <div class="tabs-row">
+  <div class="reports-content">
+    <div class="top-bar">
+      <h2 class="section-title">Reports</h2>
+      <!-- Кнопка Export -->
+      <button mat-flat-button class="export-btn" (click)="exportCSV(activeTab)">
+        <mat-icon>description</mat-icon>
+        Export
+      </button>
+    </div>
+
+    <!-- Вкладки -->
     <mat-tab-group
       class="custom-tabs"
       [(selectedIndex)]="tabIndex"
-      (selectedIndexChange)="activeTab = $event === 0 ? 'reminders' : 'history'"
+      (selectedIndexChange)="onTabChange($event)"
+      animationDuration="0ms"
     >
-      <mat-tab label="Reminders"></mat-tab>
-      <mat-tab label="Book History"></mat-tab>
+      <!-- 1. Reminders -->
+      <mat-tab label="Reminders">
+        <div class="tab-content">
+          <table 
+            mat-table 
+            [dataSource]="dataSourceReminders" 
+            matSort 
+            #sortReminders="matSort" 
+            matSortDisableClear 
+            class="custom-table"
+          >
+            
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+              <td mat-cell *matCellDef="let r">{{ r.title }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="customer">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+              <td mat-cell *matCellDef="let r">{{ r.customer }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="issueDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Date of issue</th>
+              <td mat-cell *matCellDef="let r">{{ formatDate(r.issueDate) }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="returnUntil">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Return until</th>
+              <td mat-cell *matCellDef="let r">{{ formatDate(r.returnUntil) }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['title','customer','issueDate','returnUntil']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['title','customer','issueDate','returnUntil']"></tr>
+          </table>
+        </div>
+      </mat-tab>
+
+      <!-- 2. Book History -->
+      <mat-tab label="Book history">
+        <div class="tab-content book-history-layout">
+          
+          <!-- Левая панель: Поиск и Инфо -->
+          <div class="left-panel">
+            <div class="input-group">
+              <label>Book ID</label>
+              <input 
+                type="text" 
+                [formControl]="bookSearch" 
+                (keyup.enter)="searchBook()" 
+                (blur)="searchBook()"
+                class="custom-input"
+              >
+            </div>
+
+            <div *ngIf="selectedBookTitle" class="book-info">
+              <div class="book-title-display">&lt;&lt;{{ selectedBookTitle }}&gt;&gt;</div>
+              <div *ngIf="selectedBookSubtitle" class="book-subtitle-display">&lt;&lt;{{ selectedBookSubtitle }}&gt;&gt;</div>
+            </div>
+          </div>
+
+          <!-- Правая панель: Таблица -->
+          <div class="right-panel">
+            <table 
+              mat-table 
+              [dataSource]="dataSourceHistory" 
+              matSort 
+              #sortHistory="matSort" 
+              matSortDisableClear
+              class="custom-table"
+            >
+              <ng-container matColumnDef="customer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
+                <td mat-cell *matCellDef="let h">{{ h.customer }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="issueDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date of issue</th>
+                <td mat-cell *matCellDef="let h">{{ formatDate(h.issueDate) }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="returnDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Return date</th>
+                <td mat-cell *matCellDef="let h" class="return-date-cell">
+                  {{ formatDate(h.returnDate) }}
+                  <mat-icon *ngIf="h.isOverdue" class="warning-icon" title="Overdue">warning</mat-icon>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['customer','issueDate','returnDate']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['customer','issueDate','returnDate']"></tr>
+            </table>
+
+            <div *ngIf="!dataSourceHistory.data.length && !selectedBookTitle" class="empty-state">
+            </div>
+          </div>
+
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </div>
-
-  <!-- Reminders -->
-  <div *ngIf="activeTab === 'reminders'">
-    <table mat-table [dataSource]="reminders" class="mat-elevation-z1 full-table">
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef>Title</th>
-        <td mat-cell *matCellDef="let r">{{ r.title }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="customer">
-        <th mat-header-cell *matHeaderCellDef>Customer</th>
-        <td mat-cell *matCellDef="let r">{{ r.customer }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="issueDate">
-        <th mat-header-cell *matHeaderCellDef>Date of issue</th>
-        <td mat-cell *matCellDef="let r">{{ formatDate(r.issueDate) }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="returnUntil">
-        <th mat-header-cell *matHeaderCellDef>Return until</th>
-        <td mat-cell *matCellDef="let r">{{ formatDate(r.returnUntil) }}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="['title','customer','issueDate','returnUntil']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['title','customer','issueDate','returnUntil']"></tr>
-    </table>
-  </div>
-
-  <!-- Book History -->
-  <div *ngIf="activeTab === 'history'" class="book-history-grid">
-    <!-- Левая колонка -->
-    <div class="left-panel">
-      <mat-form-field appearance="outline" class="book-id-field">
-        <mat-label>Book ID</mat-label>
-        <input matInput [formControl]="bookSearch" (keyup.enter)="searchBook()" />
-      </mat-form-field>
-
-      <div *ngIf="selectedBookTitle" class="book-info">
-        <h3 class="book-title">{{ selectedBookTitle }}</h3>
-        <p *ngIf="selectedBookSubtitle" class="book-subtitle">{{ selectedBookSubtitle }}</p>
-      </div>
-    </div>
-
-    <!-- Правая колонка -->
-    <div class="right-panel">
-      <table
-        mat-table
-        [dataSource]="history"
-        class="mat-elevation-z1"
-        *ngIf="history.length > 0"
-      >
-        <ng-container matColumnDef="customer">
-          <th mat-header-cell *matHeaderCellDef>Customer</th>
-          <td mat-cell *matCellDef="let h">{{ h.customer }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="issueDate">
-          <th mat-header-cell *matHeaderCellDef>Date of issue</th>
-          <td mat-cell *matCellDef="let h">{{ formatDate(h.issueDate) }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="returnDate">
-          <th mat-header-cell *matHeaderCellDef>Return date</th>
-          <td mat-cell *matCellDef="let h">
-            {{ formatDate(h.returnDate) }}
-            <mat-icon *ngIf="h.overdue" color="warn">warning</mat-icon>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="['customer','issueDate','returnDate']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['customer','issueDate','returnDate']"></tr>
-      </table>
-
-      <div *ngIf="!history.length && selectedBookTitle === null" class="empty">
-        No data available.
-      </div>
-    </div>
-  </div>
-</mat-card>
+</div>
