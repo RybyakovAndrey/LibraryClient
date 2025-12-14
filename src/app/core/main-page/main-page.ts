@@ -23,7 +23,12 @@ export const API_URL = 'http://localhost:8000/';
 })
 export class MainPage implements OnInit {
   httpClient = inject(HttpClient);
-  dataSourse = signal<Requests<Books> | undefined>(undefined);
+  dataSourse = signal<Requests<Books>>({
+    items: [],
+    total: 0,
+    page_size: 0,
+    page: 0,
+  });
 
   ngOnInit() {
     this.updateData();

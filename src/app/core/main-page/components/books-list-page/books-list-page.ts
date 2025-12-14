@@ -1,4 +1,4 @@
-import {Component, input, signal} from '@angular/core';
+import {Component, input, OnInit, signal} from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Requests} from '../../../share/models/request';
