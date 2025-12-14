@@ -1,31 +1,23 @@
-import { Component } from '@angular/core';
+import {Component, input, signal} from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {Requests} from '../../../share/models/request';
 
 export interface Book {
   title: string;
   authors: string;
 }
 
-const ELEMENT_DATA: Book[] = [
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-  {title: 'книга', authors: 'Hydrogen',},
-];
-
 @Component({
   selector: 'app-books-list-page',
   imports: [
-    MatTableModule
+    MatTableModule,
+    MatPaginator
   ],
   templateUrl: './books-list-page.html',
   styleUrl: './books-list-page.scss'
 })
 export class BooksListPage {
+  ELEMENT_DATA = input.required<Requests<Books>>();
   displayedColumns: string[] = ['title', 'authors'];
-  dataSource = ELEMENT_DATA;
 }

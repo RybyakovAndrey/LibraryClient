@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {BookDescription} from './components/book-description/book-description';
 import {BooksListPage} from './components/books-list-page/books-list-page';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
+import {HttpClient} from '@angular/common/http';
+import {Requests} from '../share/models/request';
+
+export const API_URL = 'http://localhost:8000/';
 
 @Component({
   selector: 'app-main-page',
@@ -17,6 +21,20 @@ import {MatButton} from '@angular/material/button';
   templateUrl: './main-page.html',
   styleUrl: './main-page.scss'
 })
-export class MainPage {
+export class MainPage implements OnInit {
+  httpClient = inject(HttpClient);
+  dataSourse = signal<Requests<Books> | undefined>(undefined);
 
+  ngOnInit() {
+    this.updateData();
+  }
+
+
+  updateData(
+    title: string = '',
+    author: string = '',
+    subject: string = ''
+  ): void {
+    this.httpClient.get(API_URL+ 'books', { params: { title_substring: title,author_substring: author,subject_substring: subject } }).subscribe((res: any) => this.dataSourse.set(res as Requests<Books>));
+  }
 }
