@@ -4,6 +4,6 @@ interface Books {
   subtitle: string;
   firstPublishDate: Date;
   description: string;
-  author: Authors;
+  authors: Authors[];
   coverFile: number;
 }

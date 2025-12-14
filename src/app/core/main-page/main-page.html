@@ -2,23 +2,23 @@
   <div class="search-form itema">
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
-      <input matInput />
+      <input matInput #title/>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Author</mat-label>
-      <input matInput />
+      <input matInput #author/>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Subject</mat-label>
-      <input matInput />
+      <input matInput #subject/>
     </mat-form-field>
 
-    <button mat-button="elevated" class="search-button">Search</button>
+    <button mat-button="elevated" class="search-button" (click)="updateData(title.value, author.value, subject.value)">Search</button>
   </div>
 
-  <app-books-list-page class="itemb"></app-books-list-page>
+  <app-books-list-page [ELEMENT_DATA]="dataSourse()" class="itemb"></app-books-list-page>
   <app-book-description class="itemc"></app-book-description>
 </div>
 
