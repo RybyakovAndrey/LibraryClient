@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, inject, input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -14,11 +14,14 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './authors-description.html',
   styleUrl: './authors-description.scss'
 })
-export class AuthorsDescription {
+export class AuthorsDescription implements OnInit {
+  ngOnInit(): void {
+    console.log(this.authors());
+  }
   dialogRef = inject(MatDialogRef);
   data = inject(MAT_DIALOG_DATA);
-  authors = input<Authors[]>([this.data.value]);
-  selectedAuthor: Authors = this.authors()[0];
+  authors = input<Authors[]>(this.data.value);
+  selectedAuthor: Authors = {id:2, name:"1"};
 
   closeDialog(): void {
     this.dialogRef.close();

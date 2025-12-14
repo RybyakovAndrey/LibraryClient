@@ -1,5 +1,5 @@
 <h1>{{book.title}}</h1>
-<a (click)="bookDescription()">by {{book.author.name}}</a>
+<a (click)="bookDescription()">by {{book.author[0].name}}</a>
 <p>first published {{book.publishYear}}</p>
 <h2>Description</h2>
 <p>{{book.description}}</p>

@@ -3,7 +3,7 @@
   <mat-label>Authors</mat-label>
   <mat-select [(ngModel)]="selectedAuthor">
     @for (author of authors(); track author.id) {
-      <mat-option [value]="author.name">{{author.name}}</mat-option>
+      <mat-option [value]="author">{{author.name}}</mat-option>
     }
   </mat-select>
 </mat-form-field>
