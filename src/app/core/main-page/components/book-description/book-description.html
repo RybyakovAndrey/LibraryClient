@@ -1,11 +1,11 @@
-<h1>{{book.title}}</h1>
-<a (click)="bookDescription()">by {{book.author[0].name}}</a>
-<p>first published {{book.publishYear}}</p>
+<h1>{{bookDescriptions().title}}</h1>
+<a (click)="bookDescription()">by {{bookDescriptions().author[0].name}}</a>
+<p>first published {{bookDescriptions().publishYear}}</p>
 <h2>Description</h2>
-<p>{{book.description}}</p>
+<p>{{bookDescriptions().description}}</p>
 <h2>Subjects</h2>
 <p>
-  @for (subject of book.subjects; track $index) {
+  @for (subject of bookDescriptions().subjects; track $index) {
     {{subject}}
   }
 </p>

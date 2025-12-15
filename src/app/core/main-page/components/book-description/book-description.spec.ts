@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookDescription } from './book-description';
+import { BookDescriptions } from './book-descriptions';
 
 describe('BookDescription', () => {
-  let component: BookDescription;
-  let fixture: ComponentFixture<BookDescription>;
+  let component: BookDescriptions;
+  let fixture: ComponentFixture<BookDescriptions>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
