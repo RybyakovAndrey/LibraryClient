@@ -15,6 +15,7 @@
     <button mat-flat-button class="search-button" (click)="editCustomer()">Edit</button>
   </div>
   <div>
+  <div>
     <h1>Issue / Return</h1>
     <div>
       <mat-form-field appearance="outline">
@@ -55,8 +56,8 @@
 
     </table>
   </div>
-  <button mat-flat-button class="search-button" (click)="updateData()">Renew</button>
   <div>
+    <button mat-flat-button class="search-button" (click)="updateData()">Renew</button>
     <h1>History</h1>
     <table mat-table [dataSource]="ELEMENT_DATA_HISTORY()" class="mat-elevation-z8">
       <ng-container matColumnDef="book_title">
@@ -88,5 +89,6 @@
       </tr>
 
     </table>
+  </div>
   </div>
 </div>

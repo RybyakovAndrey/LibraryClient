@@ -16,7 +16,6 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {HttpClient} from '@angular/common/http';
 import {AddCustomer} from '../customers-page/components/add-customer/add-customer';
 import {MatDialog} from '@angular/material/dialog';
-import {formatDate} from '@angular/common';
 
 const API_URL = 'http://localhost:8000/';
 
