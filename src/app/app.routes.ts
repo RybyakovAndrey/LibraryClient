@@ -5,6 +5,7 @@ import { CustomersListComponent } from './features/customers/components/customer
 import { CustomerFormComponent } from './features/customers/components/customer-form/customer-form.component';
 import { ReportsComponent } from './features/reports/reports.component';
 import {CirculationPage} from './core/circulation-page/circulation-page';
+import {CustomersPage} from './core/customers-page/customers-page';
 
 export const routes: Routes = [
   {
@@ -12,7 +13,7 @@ export const routes: Routes = [
     component: Layout,
     children: [
       { path: '', component: MainPage },
-      { path: 'customers', component: CustomersListComponent },
+      { path: 'customers', component: CustomersPage },
       { path: 'customers/add', component: CustomerFormComponent },
       { path: 'customers/edit/:id', component: CustomerFormComponent },
       { path: 'circulation', component: CirculationPage },

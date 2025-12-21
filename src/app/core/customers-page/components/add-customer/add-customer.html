@@ -1,0 +1,39 @@
+<div>
+  <mat-form-field appearance="outline">
+    <mat-label>ID</mat-label>
+    <input matInput [disabled]="true" #id/>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput #name/>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Address</mat-label>
+    <input matInput #address/>
+  </mat-form-field>
+  <div>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Zip</mat-label>
+      <input matInput #zip/>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>City</mat-label>
+      <input matInput #city/>
+    </mat-form-field>
+  </div>
+</div>
+
+<div>
+  <mat-form-field appearance="outline">
+    <mat-label>Phone</mat-label>
+    <input matInput #phone/>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput #email/>
+  </mat-form-field>
+</div>
+<div>
+  <button mat-flat-button class="search-button" (click)="save(name.value,address.value,zip.value,city.value,phone.value,email.value)">Save</button>
+  <button mat-flat-button class="search-button" (click)="cancel()">Cancel</button>
+</div>
