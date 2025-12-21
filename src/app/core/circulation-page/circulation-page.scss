@@ -1,0 +1,253 @@
+$black: #000000;
+$white: #FFFFFF;
+$light-green: #8FA43B;
+$grey: #BFBFBF;
+$font-stack: Tahoma, sans-serif;
+
+:host {
+  display: block;
+  font-family: $font-stack;
+  padding: 20px;
+}
+
+.window-container {
+  max-width: 950px;
+  margin: 0 auto;
+  border: 2px solid $black;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+}
+
+.window-header {
+  border-bottom: 2px solid $black;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .window-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .window-controls {
+    display: flex;
+    gap: 2px;
+    .control-box {
+      border: 1px solid #999;
+      background: #eee;
+      width: 16px;
+      height: 16px;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      
+      &.close-btn {
+        cursor: pointer;
+        &:hover { background-color: red; color: white; }
+      }
+    }
+  }
+}
+
+.window-body {
+  display: flex;
+  min-height: 500px;
+}
+
+.left-panel {
+  width: 250px;
+  border-right: 2px solid $black;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-area {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+
+  .logo-img {
+    max-width: 100%;
+    height: auto;
+    width: 180px;
+    display: block;
+  }
+}
+
+.customer-search-block {
+  margin-bottom: 30px;
+  
+  label { 
+    font-size: 12px; 
+    display: block; 
+    margin-bottom: 4px; 
+  }
+  
+  .circulation-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+  }
+
+  .circulation-btn {
+    width: 120px;
+  }
+}
+
+.customer-info {
+  h3 { margin: 0 0 5px 0; color: #000; font-size: 18px; }
+  .cust-id { margin: 0 0 15px 0; font-weight: bold; }
+  .address-block { margin-bottom: 20px; p { margin: 0; font-size: 14px; } }
+  .edit-btn { float: right; }
+}
+
+.right-panel {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-header {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  border-bottom: none;
+  margin: 0 0 10px 0;
+}
+
+.issue-return-area {
+  margin-bottom: 20px;
+}
+
+.ir-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.book-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  margin-right: 40px;
+}
+
+.book-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  label {
+    font-size: 12px;
+    font-weight: bold;
+    width: 60px;
+  }
+
+  .book-input {
+    width: 200px;
+  }
+}
+
+.book-title-row {
+  display: flex;
+  gap: 10px;
+  
+  .spacer { width: 60px; }
+  .book-title-text { 
+    font-size: 12px; 
+    font-weight: bold; 
+  }
+}
+
+.ir-buttons-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 150px;
+  align-items: flex-end;
+
+  button {
+    width: 100%;
+  }
+}
+
+.current-issues-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  
+  .table-wrapper {
+    flex: 1;
+    border: 2px solid $black;
+    background: #fff;
+    overflow-y: auto;
+    max-height: 150px;
+  }
+  .renew-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+  }
+  .renew-btn {
+    width: 100px;
+  }
+}
+
+.history-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  
+  .table-wrapper {
+    flex: 1;
+    border: 2px solid $black;
+    background: #fff;
+    overflow-y: auto;
+    max-height: 150px;
+  }
+}
+
+.custom-input {
+  border: 2px solid $black;
+  height: 28px;
+  padding: 0 5px;
+  font-family: $font-stack;
+  box-sizing: border-box;
+  &:focus { outline: none; background-color: #e6f7ff; }
+}
+
+.left-panel .custom-input {
+  width: 100%;
+}
+
+.cmd-button {
+  height: 28px;
+  background-color: $white;
+  border: 1px solid $grey;
+  border-bottom: 2px solid $black;
+  border-right: 2px solid $black;
+  font-family: $font-stack;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0 10px;
+  font-weight: bold;
+  
+  &:active { transform: translate(1px, 1px); border-width: 1px; }
+  &:disabled { 
+    color: #aaa; 
+    border-color: #ddd; 
+    cursor: default; 
+    transform: none; 
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+}

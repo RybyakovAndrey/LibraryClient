@@ -1,26 +1,96 @@
-
-<div>
-  <div class="search-form">
-    <mat-form-field appearance="outline">
-      <mat-label>Customer ID</mat-label>
-      <input matInput />
-    </mat-form-field>
-
-    <button mat-button="elevated" class="search-button">Search</button>
+<div class="window-container">
+  <div class="window-header">
+    <span class="window-title">Bookmaster3000™ - Circulation</span>
+    <div class="window-controls">
+      <span class="control-box">_</span>
+      <span class="control-box">□</span>
+      <span class="control-box close-btn" (click)="closeWindow()">×</span>
+    </div>
   </div>
-  <div>
-    <h1>Issue / Return</h1>
-    <mat-form-field appearance="outline">
-      <mat-label>Book ID</mat-label>
-      <input matInput />
-    </mat-form-field>
-    <button mat-button="elevated" class="search-button">Issue</button>
-    <button mat-button="elevated" class="search-button">Return</button>
-    <h2>Current issues</h2>
-    <app-circulation-list-page [data]="dataSource"></app-circulation-list-page>
-    <h2>History</h2>
-    <app-circulation-list-page [data]="dataSource"></app-circulation-list-page>
+
+  <div class="window-body">
+    <div class="left-panel">
+      
+      <div class="logo-area">
+        <img src="assets/logo.jpg" class="logo-img" alt="Bookmaster 3000 Logo">
+      </div>
+
+      <div class="customer-search-block">
+        <label>Customer ID</label>
+        <input 
+          type="text" 
+          class="custom-input thick-border" 
+          [(ngModel)]="customerIdInput"
+        >
+        <div class="circulation-btn-wrapper">
+          <button class="cmd-button circulation-btn" (click)="loadCustomer()">Circulation</button>
+        </div>
+      </div>
+
+      <div class="customer-info" *ngIf="customerInfo">
+        <h3>{{ customerInfo.name }}</h3>
+        <p class="cust-id">{{ customerInfo.id }}</p>
+        <div class="address-block">
+          <p>{{ customerInfo.address }}</p>
+          <p>{{ customerInfo.zip }} {{ customerInfo.city }}</p>
+        </div>
+        
+        <button class="cmd-button edit-btn" (click)="editCustomer()">Edit...</button>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      
+      <div class="issue-return-area">
+        <h2 class="section-header">Issue / Return</h2>
+        
+        <div class="ir-grid">
+          <div class="book-input-section">
+            <div class="book-input-row">
+              <label>Book ID</label>
+              <input 
+                type="text" 
+                class="custom-input thick-border book-input" 
+                [(ngModel)]="bookIdInput"
+                (input)="onBookIdChange()"
+              >
+            </div>
+            <div class="book-title-row" *ngIf="foundBookTitle">
+              <span class="spacer"></span>
+              <div class="book-title-text">Title: {{ foundBookTitle }}</div>
+            </div>
+          </div>
+          
+          <div class="ir-buttons-column">
+            <button class="cmd-button issue-btn" [disabled]="!canIssue">Issue</button>
+            <button class="cmd-button return-btn" [disabled]="!canReturn">Return</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="current-issues-area">
+        <h2 class="section-header">Current issues</h2>
+        <div class="table-wrapper">
+          <app-circulation-list-page 
+            [data]="currentIssues" 
+            type="current">
+          </app-circulation-list-page>
+        </div>
+        <div class="renew-container">
+          <button class="cmd-button renew-btn" [disabled]="!isCustomerLoaded">Renew</button>
+        </div>
+      </div>
+
+      <div class="history-area">
+        <h2 class="section-header">History</h2>
+        <div class="table-wrapper">
+          <app-circulation-list-page 
+            [data]="historyIssues" 
+            type="history">
+          </app-circulation-list-page>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
-
-
