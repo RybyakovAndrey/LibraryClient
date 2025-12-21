@@ -15,10 +15,10 @@
       <input matInput #subject/>
     </mat-form-field>
 
-    <button mat-button="elevated" class="search-button" (click)="updateData(title.value, author.value, subject.value)">Search</button>
+    <!-- ИСПРАВЛЕНИЕ: mat-flat-button -->
+    <button mat-flat-button class="search-button" (click)="updateData(title.value, author.value, subject.value)">Search</button>
   </div>
 
   <app-books-list-page (selectedRow)="rowSelection($event)" [ELEMENT_DATA]="dataSourse()" class="itemb"></app-books-list-page>
   <app-book-description [bookDescriptions]="bookDescription()" class="itemc"></app-book-description>
 </div>
-
