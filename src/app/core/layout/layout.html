@@ -17,17 +17,17 @@
   </mat-menu>
 
   <!-- Library Menu -->
-  <button mat-button [matMenuTriggerFor]="libraryMenu">Library</button>
+  <button mat-button [matMenuTriggerFor]="libraryMenu" (click)="updateToken()">Library</button>
   <mat-menu #libraryMenu="matMenu">
-    <button mat-menu-item (click)="navigateTo('customers')">
+    <button mat-menu-item [disabled]="!isAuthorized()" (click)="navigateTo('customers')">
       <mat-icon>group</mat-icon>
       <span>Manage Customers</span>
     </button>
-    <button mat-menu-item (click)="navigateTo('circulation')">
+    <button mat-menu-item [disabled]="!isAuthorized()" (click)="navigateTo('circulation')">
       <mat-icon>sync_alt</mat-icon>
       <span>Circulation</span>
     </button>
-    <button mat-menu-item (click)="navigateTo('reports')">
+    <button mat-menu-item [disabled]="!isAuthorized()" (click)="navigateTo('reports')">
       <mat-icon>bar_chart</mat-icon>
       <span>Reports</span>
     </button>
