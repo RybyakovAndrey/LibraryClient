@@ -2,7 +2,7 @@ interface Authors {
   id: number;
   name: string;
   bio?: string;
-  birthDate?: Date;
-  deathDate?: Date;
+  birth_date?: Date;
+  death_date?: Date;
   wikipedia?: string;
 }

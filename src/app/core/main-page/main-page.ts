@@ -24,7 +24,7 @@ export const API_URL = 'http://localhost:8000/';
 })
 export class MainPage implements OnInit {
   httpClient = inject(HttpClient);
-  
+
   dataSourse = signal<Requests<Books>>({
     items: [],
     total: 0,
@@ -37,10 +37,11 @@ export class MainPage implements OnInit {
   // шаблон book-description.html не падал при попытке прочитать author[0].name
   bookDescription = signal<BookDescriptions>({
     title: '',
-    publishYear: 0,
-    author: [{ id: 0, name: '' }], // <--- Было [], стало [{...}]
+    first_publish_date: '0',
+    authors: [{ id: 0, name: '' }],
     description: '',
     subjects: [],
+    cover_urls: [],
   })
 
   ngOnInit() {
@@ -52,8 +53,8 @@ export class MainPage implements OnInit {
     author: string = '',
     subject: string = ''
   ): void {
-    this.httpClient.get(API_URL + 'books', { 
-      params: { title_substring: title, author_substring: author, subject_substring: subject } 
+    this.httpClient.get(API_URL + 'books', {
+      params: { title_substring: title, author_substring: author, subject_substring: subject }
     }).pipe(
       catchError(err => {
         console.warn('Backend unavailable, loading empty state', err);
@@ -63,7 +64,7 @@ export class MainPage implements OnInit {
   }
 
   updateDescription(bookId: number): void {
-    this.httpClient.get(API_URL + 'books/' + bookId).subscribe((res: any) => 
+    this.httpClient.get(API_URL + 'books/' + bookId).subscribe((res: any) =>
       this.bookDescription.set(res as BookDescriptions)
     );
   }
