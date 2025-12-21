@@ -5,7 +5,88 @@
       <input matInput #title/>
     </mat-form-field>
 
-    <button mat-flat-button class="search-button">Circulation</button>
+    <button mat-flat-button class="search-button" (click)="getIssues(title.value)">Circulation</button>
+    @if (customer()[0]) {
+      @let customr = customer()[0];
+      <h2>{{customr.name}}</h2>
+      <h3>({{customr.id}})</h3>
+      <p>{{customr.zip}} {{customr.address}}</p>
+    }
+    <button mat-flat-button class="search-button" (click)="editCustomer()">Edit</button>
   </div>
+  <div>
+    <h1>Issue / Return</h1>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Book ID</mat-label>
+        <input matInput #bookId/>
+      </mat-form-field>
+      <button mat-flat-button class="search-button" (click)="getBook(bookId.value)">Issue</button>
+      <button mat-flat-button class="search-button" (click)="returnBook(bookId.value)">Return</button>
+    </div>
+    <table mat-table [dataSource]="ELEMENT_DATA()" class="mat-elevation-z8">
+      <ng-container matColumnDef="book_title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.book_title }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="date_of_issue">
+        <th mat-header-cell *matHeaderCellDef> Date of issue </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date_of_issue }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="return_until">
+        <th mat-header-cell *matHeaderCellDef> Return until </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.return_until }}
+        </td>
+      </ng-container>
 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;"
+        (click)="selectRow(row)"
+        [class.selected]="selection.isSelected(row)">
+      </tr>
+
+    </table>
+  </div>
+  <button mat-flat-button class="search-button" (click)="updateData()">Renew</button>
+  <div>
+    <h1>History</h1>
+    <table mat-table [dataSource]="ELEMENT_DATA_HISTORY()" class="mat-elevation-z8">
+      <ng-container matColumnDef="book_title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.book_title }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="date_of_issue">
+        <th mat-header-cell *matHeaderCellDef> Date of issue </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date_of_issue }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="return_until">
+        <th mat-header-cell *matHeaderCellDef> Return until </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.return_until }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsHistory"></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumnsHistory;"
+        (click)="selectRowHistory(row)"
+        [class.selected]="selectionHistory.isSelected(row)">
+      </tr>
+
+    </table>
+  </div>
 </div>

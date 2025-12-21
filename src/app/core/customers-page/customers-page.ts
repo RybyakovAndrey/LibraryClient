@@ -71,12 +71,15 @@ export class CustomersPage implements OnInit {
         width: '500px',
         disableClose: true,
       });
+
+      dialogRef.afterClosed().subscribe(res => {this.updateCustomers()});
     } else {
       const dialogRef = this.dialog.open(AddCustomer, {
         width: '500px',
         disableClose: true,
         data: { value: this.selection.selected[0] }
       });
+      dialogRef.afterClosed().subscribe(res => {this.updateCustomers()});
     }
 
   }

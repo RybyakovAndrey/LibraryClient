@@ -30,11 +30,13 @@ export class AddCustomer implements AfterViewInit {
   http = inject(HttpClient);
   dialogRef = inject(MatDialogRef);
   data = inject(MAT_DIALOG_DATA);
+  customerID = 1;
 
   ngAfterViewInit(): void {
     if (!this.data?.value) return;
 
     const customer = this.data.value;
+    this.customerID = customer.id;
     console.log(customer);
     this.id.nativeElement.value = customer.id ?? '';
     this.name.nativeElement.value = customer.name ?? '';
@@ -53,11 +55,20 @@ export class AddCustomer implements AfterViewInit {
     phone: string,
     email: string
   ): void {
-    this.http.post(API_URL + 'customers/', {
-      name, address, zip_code, city, phone, email
-    }, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    }).subscribe(res => console.log(res));
+    if (!this.data?.value) {
+      this.http.post(API_URL + 'customers/', {
+        name, address, zip_code, city, phone, email
+      }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      }).subscribe(res => this.dialogRef.close());
+    } else {
+      this.http.put(API_URL + 'customers/' + this.customerID, {
+        name, address, zip_code, city, phone, email
+      }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      }).subscribe(res => this.dialogRef.close());
+    }
+
   }
 
   cancel(): void {
