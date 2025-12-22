@@ -1,8 +1,9 @@
-<mat-tab-group>
+<button mat-flat-button class="search-button" (click)="export(selectedTabIndex)">Export</button>
+<mat-tab-group (selectedIndexChange)="selectedTabIndex = $event">
   <mat-tab label="Reminders">
     <app-reports-list></app-reports-list>
   </mat-tab>
   <mat-tab label="Book history">
-    <app-book-history></app-book-history>
+    <app-book-history (bookId)="changeBookId($event)"></app-book-history>
   </mat-tab>
 </mat-tab-group>

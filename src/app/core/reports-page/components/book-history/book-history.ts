@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, EventEmitter, inject, output, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SelectionModel} from '@angular/cdk/collections';
 import {
@@ -50,10 +50,11 @@ interface Book {
   styleUrl: './book-history.scss',
 })
 export class BookHistory {
+  bookId = output<string>()
   http = inject(HttpClient);
   ELEMENT_DATA = signal<BookHistoryModel[]>([]);
   bookData = signal<Book>({title: '', subtitle: ''});
-  displayedColumns: string[] = ['title', 'customer', 'date_of_issue', 'return_until'];
+  displayedColumns: string[] = ['customer', 'date_of_issue', 'return_until'];
 
 
   selection = new SelectionModel<Issue>(false);
@@ -63,6 +64,7 @@ export class BookHistory {
   }
 
   search(book_id: string): void {
+    this.bookId.emit(book_id);
     this.http.get('http://localhost:8000/reports/book-history/' + book_id, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`} }).subscribe((res: any) => {this.ELEMENT_DATA.set(res.history); this.bookData.set(res.book);});
   }
 }
